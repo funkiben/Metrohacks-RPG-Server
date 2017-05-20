@@ -26,9 +26,9 @@ var server = net.createServer(function (socket) {
 	
 	if (clients.length == 4) {
 		
+		new Game(clients);
 		
-		
-		
+		clients = [];
 		
 	}
 	
