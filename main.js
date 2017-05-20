@@ -3,8 +3,12 @@ const net = require("net");
 const EventEmitter = require("events");
 const messages = require("./messages");
 
+var clients = new Array();
+
 var server = net.createServer(function (socket) {
 	console.log("client connected");
+	
+	clients.push(socket);
 	
 	socket.name = "no name!";
 	
@@ -17,9 +21,38 @@ var server = net.createServer(function (socket) {
 	socket.on("end", function() {
 		console.log("client disconnected: " + socket.name);
 	});
+	
+	
+	
+	if (clients.length == 4) {
+		
+		
+		
+		
+		
+	}
+	
+	
+	
 });
 
 
 server.listen(8080, function() {
 	console.log("server is listening");
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
