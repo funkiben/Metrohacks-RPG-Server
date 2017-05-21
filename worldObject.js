@@ -5,20 +5,25 @@ const labels = require("./labels");
 
     class WorldObject {
         
-        constructor(objectID, type, x, y) {
+        constructor(world, objectID, type, x, y) {
+            this.world = world;
             this.objectID = objectID;
             this.type = type;
             this.x = x;
             this.y = y;
+            this.z = 0;
+
+            setPosition(x, y);
         }
 
         create() {
-            var buf = messages.newMessage(labels.CREATE_OBJECT, 3);
+            var buf = messages.newMessage(labels.CREATE_OBJECT, 4);
 
             buf.writeUInt16LE(this.objectID, 2);
             buf.writeUInt8(this.type, 4);
+            buf.writeUInt8(this.z , 5);
 
-            return buf;
+            this.game.sendToEveryone(buf);
         }
 
         remove() {
@@ -26,12 +31,19 @@ const labels = require("./labels");
 
             buf.writeUInt16LE(this.objectID, 2);
             
-            return buf;
+            this.game.sendToEveryone(buf);
         }
 
         setPosition(x, y) {
+            for (var m in this.world.walls) {
+                if (this.world.walls[m].contains(x, y)) {
+                    return;
+                }
+            }
+
             this.x = x;
             this.y = y;
+
 
             var buf = messages.newMessage(labels.OBJECT_POSITION, 8);
 
@@ -40,12 +52,12 @@ const labels = require("./labels");
             buf.writeInt32LE(this.y, 8);
 
 
-            return buf;
+            this.game.sendToEveryone(buf);
             
         }
 
         move(deltaX, deltaY) {
-            return this.setPosition(this.x + deltaX, this.y + deltaY);
+            this.setPosition(this.x + deltaX, this.y + deltaY);
         }
 
 

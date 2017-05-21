@@ -6,8 +6,8 @@ const WorldObject = require("./worldObject");
 
     class InteractableWorldObject extends WorldObject {
         
-        constructor(objectID, type, x, y, action) {
-            super(objectID, type, x, y);
+        constructor(world, objectID, type, x, y, action) {
+            super(world, objectID, type, x, y);
 
             this.action = action;
 

@@ -1,5 +1,6 @@
 
 const messages = require("./messages");
+const EventEmitter = require("events");
 const Player = require("./player");
 
 messages.labelRegistry[1] = "keyPressed";
@@ -10,27 +11,30 @@ messages.labelRegistry[1] = "keyPressed";
 	class Game {
 		
 		constructor(sockets) {
+			this.events = new EventEmitter();
+
 			this.players = [];
 			this.objects = [];
+			this.wall = [];
 
 			var game = this;
 			var player;
 
 			for (var m in sockets) {
-				player = this.players[m] = new Player(m, sockets[m], 0, 0);
+				player = this.players[m] = new Player(this, m, sockets[m], 0, 0);
 				this.addObject(player);
 
 				sockets[m].messages.on("keyPressed", function(data) {
 					var key = data.readInt8(0);
 
 					if (key == 119) {
-						game.sendToEveryone(player.puppet.move(0, labels.PLAYER_SPEED));
+						player.puppet.move(0, labels.PLAYER_SPEED);
 					} else if (key == 115) {
-						game.sendToEveryone(player.puppet.move(0, -labels.PLAYER_SPEED));
+						player.puppet.move(0, -labels.PLAYER_SPEED);
 					} else if (key == 97) {
-						game.sendToEveryone(player.puppet.move(-labels.PLAYER_SPEED, 0));
+						player.puppet.move(-labels.PLAYER_SPEED, 0);
 					} else if (key == 100) {
-						game.sendToEveryone(player.puppet.move(labels.PLAYER_SPEED, 0));
+						player.puppet.move(labels.PLAYER_SPEED, 0);
 					}
 
 				});
@@ -46,12 +50,12 @@ messages.labelRegistry[1] = "keyPressed";
 
 		addObject(obj) {
 			this.objects.push(obj);
-			this.sendToEveryone(obj.create());	
+			obj.create();	
 		}
 		
 		removeObject(obj) {
 			this.objects.splice(this.objects.indexOf(obj), 1);
-			this.sendToEveryone(obj.remove());
+			obj.remove();
 		}
 		
 		sendToEveryone(buf) {
