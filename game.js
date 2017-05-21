@@ -17,11 +17,13 @@ messages.labelRegistry[1] = "keyPressed";
 			this.objects = [];
 			this.wall = [];
 
+			this.objectIDs = 0;
+
 			var game = this;
 			var player;
 
 			for (var m in sockets) {
-				player = this.players[m] = new Player(this, m, sockets[m], 0, 0);
+				player = this.players[m] = new Player(this, this.nextObjectID(), sockets[m], 0, 0);
 				this.addObject(player);
 
 				sockets[m].messages.on("keyPressed", function(data) {
@@ -62,6 +64,10 @@ messages.labelRegistry[1] = "keyPressed";
 			for (var m in this.players) {
 				this.players[m].socket.write(buf);
 			}
+		}
+
+		nextObjectID() {
+			return this.objectIDs++;
 		}
 		
 	}

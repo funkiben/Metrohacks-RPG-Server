@@ -6,11 +6,11 @@ const InteractableWorldObject = require("./interactableWorldObject");
 
     class AttackableWorldObject extends InteractableWorldObject {
         
-        constructor(world, objectID, type, x, y, maxHealth) {
-            super(world, objectID, type, x, y, this.attack);
+        constructor(game, objectID, type, x, y, maxHealth) {
+            super(game, objectID, type, x, y, this.attack);
 
-            world.sendToEveryone(this.setHealth(health));
-            world.sendToEveryone(this.setMaxHealth(maxHealth));
+            game.sendToEveryone(this.setHealth(health));
+            game.sendToEveryone(this.setMaxHealth(maxHealth));
         }
 
         attack(dmg) {
@@ -24,7 +24,7 @@ const InteractableWorldObject = require("./interactableWorldObject");
             buf.writeUInt16LE(this.objectID, 2);
             buf.writeUInt16LE(this.health, 4);
 
-            this.world.sendToEveryone(buf);
+            this.game.sendToEveryone(buf);
         }
 
         setMaxHealth(maxHealth) {
@@ -35,7 +35,7 @@ const InteractableWorldObject = require("./interactableWorldObject");
             buf.writeUInt16LE(this.objectID, 2);
             buf.writeUInt16LE(this.maxHealth, 4);
 
-            this.world.sendToEveryone(buf);
+            this.game.sendToEveryone(buf);
         }
 
 

@@ -6,8 +6,8 @@ const GameObject = require("./GameObject");
 
     class TileGameObject extends GameObject {
         
-        constructor(world, objectID, type, x, y) {
-            super(world, objectID, type, x, y);
+        constructor(game, objectID, type, x, y) {
+            super(game, objectID, type, x, y);
 
             this.width = 20;
             this.height = 20;

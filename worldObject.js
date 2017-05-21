@@ -5,15 +5,15 @@ const labels = require("./labels");
 
     class WorldObject {
         
-        constructor(world, objectID, type, x, y) {
-            this.world = world;
+        constructor(game, objectID, type, x, y) {
+            this.game = game;
             this.objectID = objectID;
             this.type = type;
             this.x = x;
             this.y = y;
             this.z = 0;
 
-            setPosition(x, y);
+            this.setPosition(x, y);
         }
 
         create() {
