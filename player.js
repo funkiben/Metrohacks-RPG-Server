@@ -1,15 +1,15 @@
 const messages = require("./messages");
 const labels = require("./labels");
-const AttackableWorldObject = require("./attackableWorldObject");
+const WorldObject = require("./worldObject");
 const objectTypes = require("./objectTypes");
 const properties = require("./properties");
 
 (function() {
 
-    class Player extends AttackableWorldObject {
+    class Player extends WorldObject {
 
-         constructor(game, objectID, socket, x, y) {
-            super(game, objectID, objectTypes.PLAYER, x, y, properties.MAX_HEALTH);
+         constructor(game, socket, x, y) {
+            super(game, objectTypes.PLAYER, x, y);
 
             this.socket = socket;
             this.name = "no name";

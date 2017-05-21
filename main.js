@@ -4,17 +4,17 @@ const EventEmitter = require("events");
 const messages = require("./messages");
 const Game = require("./game");
 
+messages.labelRegistry[2] = 'setName';
+
 var clients = new Array();
 
 var server = net.createServer(function (socket) {
 	console.log("client connected");
 	
-	clients.push(socket);
-	
 	socket.name = "no name!";
 	
 	socket.messages = new EventEmitter();
-	
+
 	socket.on("data", function(data) {
 		messages.call(socket.messages, data);
 	});
@@ -23,15 +23,19 @@ var server = net.createServer(function (socket) {
 		console.log("client disconnected: " + socket.name);
 	});
 	
-	
-	
-	if (clients.length == 2) {
+	socket.messages.on("setName", function(args) {
+		socket.name = args;
+
+		clients.push(socket);
+
+		if (clients.length == 2) {
 		
-		new Game(clients);
+			new Game(clients);
 		
-		clients = [];
+			clients = [];
 		
-	}
+		}
+	});
 	
 	
 	

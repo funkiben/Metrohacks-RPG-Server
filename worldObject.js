@@ -5,9 +5,9 @@ const labels = require("./labels");
 
     class WorldObject {
         
-        constructor(game, objectID, type, x, y) {
+        constructor(game, type, x, y) {
             this.game = game;
-            this.objectID = objectID;
+            this.objectID = game.nextObjectID(;
             this.type = type;
             this.x = x;
             this.y = y;

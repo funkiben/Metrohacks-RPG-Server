@@ -6,8 +6,8 @@ const WorldObject = require("./WorldObject");
 
     class TileWorldObject extends WorldObject {
         
-        constructor(game, objectID, type, x, y, isWall) {
-            super(game, objectID, type, x, y);
+        constructor(game, type, x, y, isWall) {
+            super(game, type, x, y);
 
             this.isWall = isWall;
             this.width = 40;
