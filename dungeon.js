@@ -40,7 +40,7 @@
                             var playery=game[player].y;
                             var distance=sqrt(pow((xval-playerx),2)-pow((yval-playery),2));
                             if(distance<properties.PLAYER_RANGE){
-                                events.emit('enemyhit');
+                                game.events.emit('enemyhit');
                                 
                             }
                         
@@ -54,7 +54,7 @@
                         var playery=game[player].y;
                         var distance=sqrt(pow((xval-playerx),2)-pow((yval-playery),2));
                         if(distance<10){
-                            events.emit('tilehit')
+                            game.events.emit('tilehit')
                         }
                     }
 
