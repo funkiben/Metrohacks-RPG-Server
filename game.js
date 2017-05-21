@@ -23,20 +23,19 @@ messages.labelRegistry[1] = 'keyPressed';
 			this.objectIDs = 0;
 
 			var game = this;
-			var player;
-
+			
 			for (var m in sockets) {
-				player = this.players[m] = new Player(this, this.nextObjectID(), sockets[m], 0, 0);
+				const player = this.players[m] = new Player(this, this.nextObjectID(), sockets[m], 0, 0);
 				this.addObject(player);
 				player.sendID();
 
 				sockets[m].messages.on("keyPressed", function(data) {
 					var key = data.readInt8(0);
-
+					
 					if (key == 119) {
-						player.puppet.move(0, properties.PLAYER_SPEED);
-					} else if (key == 115) {
 						player.puppet.move(0, -properties.PLAYER_SPEED);
+					} else if (key == 115) {
+						player.puppet.move(0, properties.PLAYER_SPEED);
 					} else if (key == 97) {
 						player.puppet.move(-properties.PLAYER_SPEED, 0);
 					} else if (key == 100) {
