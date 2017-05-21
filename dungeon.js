@@ -6,11 +6,13 @@
         
         //objects is just all the objects
         //switchvals is an array of arrays []
-        //bosses is a bosses' stats, [its in an array because there can be multiple bosses[switchValsded,boolDed]
-        constructor(objects,switchVals,game){
+        //enemy is some stuff, probably [somestuff] with x and y pos vals
+        constructor(objects,switchVals,game,enemies,properties){
             this.objects = objects;
+            this.properties=properties;
             this.switchVals = switchVals;
             this.game=game;
+            this.enemy=enemy;
             this.events=new EventEmitter();
             var events=this.events
             for(var player in game){
@@ -24,8 +26,21 @@
                             var playerx=game[player].x;
                             var playery=game[player].y;
                             var distance=sqrt(pow((xval-playerx),2)-pow((yval-playery),2));
-                            if(distance<3){
+                            if(distance<properties.PLAYER_RANGE){
                                 events.emit('switchhit');
+                                
+                            }
+                        
+
+                        }
+                        for(var enemy in enemies){
+                            var xval=enemies[enemy].x;
+                            var yval=enemies[enemy].y;
+                            var playerx=game[player].x;
+                            var playery=game[player].y;
+                            var distance=sqrt(pow((xval-playerx),2)-pow((yval-playery),2));
+                            if(distance<properties.PLAYER_RANGE){
+                                events.emit('enemyhit');
                                 
                             }
                         
@@ -37,6 +52,7 @@
 
                 });
             }
+            
         }
 
         
