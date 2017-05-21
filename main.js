@@ -2,6 +2,7 @@
 const net = require("net");
 const EventEmitter = require("events");
 const messages = require("./messages");
+const Game = require("./game");
 
 var clients = new Array();
 

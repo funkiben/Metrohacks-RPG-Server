@@ -2,8 +2,10 @@
 const messages = require("./messages");
 const EventEmitter = require("events");
 const Player = require("./player");
+const labels = require("./labels");
+const TileWorldObject = require("./tileWorldObject");
 
-messages.labelRegistry[1] = "keyPressed";
+messages.labelRegistry[1] = 'keyPressed';
 
 (function() {
 
@@ -15,7 +17,7 @@ messages.labelRegistry[1] = "keyPressed";
 
 			this.players = [];
 			this.objects = [];
-			this.wall = [];
+			this.walls = [];
 
 			this.objectIDs = 0;
 
@@ -25,6 +27,7 @@ messages.labelRegistry[1] = "keyPressed";
 			for (var m in sockets) {
 				player = this.players[m] = new Player(this, this.nextObjectID(), sockets[m], 0, 0);
 				this.addObject(player);
+				player.sendID();
 
 				sockets[m].messages.on("keyPressed", function(data) {
 					var key = data.readInt8(0);
@@ -44,15 +47,27 @@ messages.labelRegistry[1] = "keyPressed";
 			}
 
 			for (var m in this.players) {
+
+				if (m == 0) {
+					this.players[m].setPuppet(this.players[this.players.length - 1]);
+				} else {
+					this.players[m].setPuppet(this.players[m - 1]);
+				}
+
 				this.players[m].setController(this.players[(m + 1) % this.players.length]);
-				this.players[m].setPuppet(this.players[(m - 1) % this.players.length]);
 			}
 			
 		}
 
 		addObject(obj) {
 			this.objects.push(obj);
-			obj.create();	
+			obj.create();
+
+			if (obj instanceof TileWorldObject) {
+				if (obj.isWall) {
+					this.walls.push(obj);
+				}
+			}
 		}
 		
 		removeObject(obj) {

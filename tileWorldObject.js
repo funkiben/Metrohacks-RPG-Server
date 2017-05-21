@@ -1,14 +1,15 @@
 const messages = require("./messages");
 const labels = require("./labels");
-const GameObject = require("./GameObject");
+const WorldObject = require("./WorldObject");
 
 (function() {
 
-    class TileGameObject extends GameObject {
+    class TileWorldObject extends WorldObject {
         
-        constructor(game, objectID, type, x, y) {
+        constructor(game, objectID, type, x, y, isWall) {
             super(game, objectID, type, x, y);
 
+            this.isWall = isWall;
             this.width = 20;
             this.height = 20;
 
@@ -26,6 +27,6 @@ const GameObject = require("./GameObject");
 
     }
 
-    module.exports = TileGameObject;
+    module.exports = TileWorldObject;
 
 }());

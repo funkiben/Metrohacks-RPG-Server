@@ -35,8 +35,8 @@ const labels = require("./labels");
         }
 
         setPosition(x, y) {
-            for (var m in this.world.walls) {
-                if (this.world.walls[m].contains(x, y)) {
+            for (var m in this.game.walls) {
+                if (this.game.walls[m].contains(x, y)) {
                     return;
                 }
             }
@@ -45,7 +45,7 @@ const labels = require("./labels");
             this.y = y;
 
 
-            var buf = messages.newMessage(labels.OBJECT_POSITION, 8);
+            var buf = messages.newMessage(labels.OBJECT_POSITION, 10);
 
             buf.writeUInt16LE(this.objectID, 2);
             buf.writeInt32LE(this.x, 4);

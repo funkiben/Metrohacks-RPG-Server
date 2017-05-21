@@ -16,13 +16,11 @@ const properties = require("./properties");
 
             this.controller = null;
             this.puppet = null;
-            
-            this.sendID();
 
          }
 
          setPuppet(player) {
-             this.puppet = puppet;
+             this.puppet = player;
 
              var buf = messages.newMessage(labels.SET_PLAYER_PUPPET, this.puppet.name.length);
              
@@ -32,7 +30,7 @@ const properties = require("./properties");
          }
 
         setController(player) {
-             this.controller = controller;
+             this.controller = player;
 
              var buf = messages.newMessage(labels.SET_PLAYER_CONTROLLER, this.controller.name.length);
              
