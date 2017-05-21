@@ -1,3 +1,3 @@
 clear
-cd /Users/ben/Code/Metrohacks2/Metrohacks-RPG-Server
+cd C:/Users/ecline/Metrohacks-RPG-Server
 node main
