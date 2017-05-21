@@ -7,7 +7,7 @@ const labels = require("./labels");
         
         constructor(game, type, x, y) {
             this.game = game;
-            this.objectID = game.nextObjectID(;
+            this.objectID = game.nextObjectID();
             this.type = type;
             this.x = x;
             this.y = y;

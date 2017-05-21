@@ -63,7 +63,7 @@ messages.labelRegistry[1] = 'keyPressed';
                             if (distanceSqr * distanceSqr < properties.PLAYER_RANGE * properties.PLAYER_RANGE) {
                                 
 								game.switches[j].setState(true);
-
+								game.check();
 
 
                             }

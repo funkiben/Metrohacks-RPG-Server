@@ -1,4 +1,4 @@
-
+const WorldObject = require("./worldObject");
 const messages = require("./messages");
 const labels = require("./labels");
 
@@ -8,7 +8,7 @@ const labels = require("./labels");
         
         constructor(game, type, x, y) {
             super(game, type, x, y);
-            
+
             this.state = false;
 
         }
