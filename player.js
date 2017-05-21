@@ -8,8 +8,8 @@ const properties = require("./properties");
 
     class Player extends AttackableWorldObject {
 
-         constructor(objectID, socket, x, y) {
-            super(objectID, objectTypes.PLAYER, x, y, properties.MAX_HEALTH);
+         constructor(game, objectID, socket, x, y) {
+            super(game, objectID, objectTypes.PLAYER, x, y, properties.MAX_HEALTH);
 
             this.socket = socket;
             this.name = "no name";
