@@ -37,7 +37,6 @@ const properties= require('./properties');
                         
 
                         }
-
                         
                     }
 
