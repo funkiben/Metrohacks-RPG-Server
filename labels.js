@@ -11,6 +11,8 @@
     a.SET_PLAYER_PUPPET =       35; // string of puppet name
     a.SET_PLAYER_CONTROLLER =   36; // string of controller name
     a.SET_PLAYER_ID =           37; // 2 bytes of world object id
+    a.SET_SWITCH =              38; // 3 bytes: world object id, 0 = off, 1 = on
+    a.OPEN_DOOR =               39; // 3 bytes: world object id, 0 = off, 1 = on
 
     module.exports = a;
 

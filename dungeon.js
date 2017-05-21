@@ -1,64 +1,42 @@
 
-(function(){
+const properties= require('./properties');
+
+(function() {
     
-    const EventEmitter = require('events');
-    const properties= require('./properties');
-    class Dungeon{
+    
+    class Dungeon {
         
-        //objects is just all the objects
-        //switchvals is an array of arrays []
-        //enemy is some stuff, probably [somestuff] with x and y pos vals
-        constructor(objects,switchVals,game,enemies){
+        constructor(objects, switches, game, enemies) {
             this.objects = objects;
-            this.switchVals = switchVals;
-            this.game=game;
-            this.enemy=enemy;
+            this.switches = switches;
+            this.game = game;
+            this.enemy = enemy;
             
+            var switchX, switchY, playerX, playerY, distanceSqr;
             
-            for(var player in game){
-                game[player].socket.messages.on("keyPress",function(data){
-                    var key=data.readInt8(0)
-                    if(key==32 || key==101){
+            for (var i in game.players) {
+
+                game[i].socket.messages.on("keyPress", function(data) {
+
+                    var key = data.readInt8(0);
+
+                    if (key == 32 || key == 101) {
                         
-                        for(var switchpos in switchVals){
-                            var xval=switchVals[switchpos].x;
-                            var yval=switchVals[switchpos].y;
-                            var playerx=game[player].x;
-                            var playery=game[player].y;
-                            var distance=sqrt(pow((xval-playerx),2)-pow((yval-playery),2));
-                            if(distance<properties.PLAYER_RANGE){
-                                game.events.emit('switchhit');
-                                
+                        for (var j in switches) {
+
+                            switchX = switches[j].x;
+                            switchY = switchVals[j].y;
+                            playerX = game[i].x;
+                            playerY = game[i].y;
+
+                            distanceSqr = pow(switchX - playerX, 2) + pow(switchY - playerY, 2);
+
+                            if (distanceSqr * distanceSqr < properties.PLAYER_RANGE * properties.PLAYER_RANGE) {
+                                game.events.emit('switchInteraction', game[i], switches[j]);
                             }
                         
 
                         }
-                        for(var enemy in enemies){
-                            var xval=enemies[enemy].x;
-                            var yval=enemies[enemy].y;
-                            var playerx=game[player].x;
-                            var playery=game[player].y;
-                            var distance=sqrt(pow((xval-playerx),2)-pow((yval-playery),2));
-                            if(distance<properties.PLAYER_RANGE){
-                                game.events.emit('enemyhit');
-                                
-                            }
-                        
-
-                        }
-                game.events.on("playerMove",function(){
-                    for(object in objects){
-                        var xval=objects[object].x;
-                        var yval=objects[object].y;
-                        var playerx=game[player].x;
-                        var playery=game[player].y;
-                        var distance=sqrt(pow((xval-playerx),2)-pow((yval-playery),2));
-                        if(distance<10){
-                            game.events.emit('tilehit')
-                        }
-                    }
-
-                });
 
                         
                     }
