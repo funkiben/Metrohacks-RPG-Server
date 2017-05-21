@@ -1,13 +1,14 @@
 const WorldObject = require("./worldObject");
 const messages = require("./messages");
 const labels = require("./labels");
+const objectTypes = require("./objectTypes");
 
 (function() {
 
     class SwitchWorldObject extends WorldObject {
         
-        constructor(game, type, x, y) {
-            super(game, type, x, y);
+        constructor(game, x, y) {
+            super(game, objectTypes.GROUND_BUTTON, x, y);
 
             this.state = false;
 

@@ -12,8 +12,8 @@ messages.labelRegistry[1] = 'keyPressed';
 
 (function() {
 
-	const WIDTH = 30;
-	const HEIGHT = 30;
+	const WIDTH = 15;
+	const HEIGHT = 15;
 
 	class Game {
 		
@@ -30,13 +30,12 @@ messages.labelRegistry[1] = 'keyPressed';
 			var game = this;
 			
 			for (var m in sockets) {
-				this.players[m] = new Player(this, sockets[m], 0, 0);
+				this.players[m] = new Player(this, sockets[m], 100, 100);
 			}
 
 			for (var m in this.players) {
 				const player = this.players[m];
 				this.addObject(player);
-				player.sendID();
 
 				sockets[m].messages.on("keyPressed", function(data) {
 					var key = data.readInt8(0);
@@ -86,24 +85,27 @@ messages.labelRegistry[1] = 'keyPressed';
 				}
 
 				this.players[m].setController(this.players[(m + 1) % this.players.length]);
+
+				this.players[m].sendID();
 			}
 
 			var obj;
             for (var y = 0; y < WIDTH; y++) {
                 for (var x = 0; x < HEIGHT; x++) {
-                    obj = new TileWorldObject(game, objectTypes.FLOOR, x, y, false)
-                    this.objects.push(obj);
-
+                    obj = new TileWorldObject(this, objectTypes.FLOOR, x * 80, y * 80, false)
+					
 					if (x == 0 || x == WIDTH - 1 || y == 0 || y == HEIGHT - 1) {
 						obj.isWall = true;
 						obj.type = objectTypes.WALL;
 					}
 
+					this.addObject(obj);
+
                 }
 			}
 
             for (var i = 0; i < 4; i++) {
-                this.objects.push(new SwitchWorldObject(this, Math.random() * WIDTH * 40, Math.random * HEIGHT * 40));
+                this.addObject(new SwitchWorldObject(this, Math.random() * WIDTH * 80, Math.random() * HEIGHT * 80));
 
             }
 			
@@ -133,7 +135,7 @@ messages.labelRegistry[1] = 'keyPressed';
 
 			for (var m in this.switches) {
 				this.switches[m].setState(false);
-				this.switches[m].setPosition(Math.random() * WIDTH * 40, Math.random() * HEIGHT * 40);
+				this.switches[m].setPosition(Math.random() * WIDTH * 80, Math.random() * HEIGHT * 80);
 			}
 			
 		}

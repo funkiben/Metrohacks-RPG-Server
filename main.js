@@ -23,19 +23,16 @@ var server = net.createServer(function (socket) {
 		console.log("client disconnected: " + socket.name);
 	});
 	
-	socket.messages.on("setName", function(args) {
-		socket.name = args;
+	
+	clients.push(socket);
 
-		clients.push(socket);
-
-		if (clients.length == 2) {
-		
-			new Game(clients);
-		
-			clients = [];
-		
-		}
-	});
+	if (clients.length == 2) {
+	
+		new Game(clients);
+	
+		clients = [];
+	
+	}
 	
 	
 	

@@ -11,6 +11,8 @@ const properties = require("./properties");
          constructor(game, socket, x, y) {
             super(game, objectTypes.PLAYER, x, y);
 
+            this.z = 1;
+
             this.socket = socket;
             this.name = "no name";
 

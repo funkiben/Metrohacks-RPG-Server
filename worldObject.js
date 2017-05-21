@@ -19,7 +19,7 @@ const labels = require("./labels");
 
             buf.writeUInt16LE(this.objectID, 2);
             buf.writeUInt8(this.type, 4);
-            buf.writeUInt8(this.z , 5);
+            buf.writeInt8(this.z , 5);
 
             this.game.sendToEveryone(buf);
 

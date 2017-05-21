@@ -9,9 +9,11 @@ const WorldObject = require("./WorldObject");
         constructor(game, type, x, y, isWall) {
             super(game, type, x, y);
 
+            this.z = -1;
+
             this.isWall = isWall;
-            this.width = 40;
-            this.height = 40;
+            this.width = 80;
+            this.height = 80;
 
         }
 
