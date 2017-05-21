@@ -10,8 +10,8 @@ const WorldObject = require("./WorldObject");
             super(game, objectID, type, x, y);
 
             this.isWall = isWall;
-            this.width = 20;
-            this.height = 20;
+            this.width = 40;
+            this.height = 40;
 
         }
 
