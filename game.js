@@ -1,74 +1,64 @@
 
 const messages = require("./messages");
+const Player = require("./player");
+
+messages.labelRegistry[1] = "keyPressed";
 
 (function() {
 
-	const ENTITY_POSITION = 30;
-	const NEW_OBJECT = 31;
-	const KEY_INPUT = 
-	
+
 	class Game {
 		
-		constructor(player1, player2, player3, player4) {
-			this.player1 = player1;
-			this.player2 = player2;
-			this.player3 = player3;
-			this.player4 = player4;
-			
-			this.players = [player1, player2, player3, player4];
+		constructor(sockets) {
+			this.players = [];
+			this.objects = [];
 
-			this.objects = new Array();
+			var game = this;
+			var player;
 
-			this.objects.push(this.players);
-			
-		}
+			for (var m in sockets) {
+				player = this.players[m] = new Player(m, sockets[m], 0, 0);
+				this.addObject(player);
 
-		addObject(entityID, typeID) {
-			var buf = messages.newMessage(NEW_OBJECT, 3);
-			
-			buf.writeInt16LE(entityID, 2);
-			buf.writeInt8(typeID, 4);
-			
-			sendToEveryone(buf);	
-		}
-		
-		sendEntityPosition(entityID, x, y) {
-			
-			entity.x = x;
-			entity.y = y;
-			
-			var buf = messages.newMessage(ENTITY_MOVE, 10);
-			
-			buf.writeInt16LE(entityID, 2);
-			buf.writeInt32LE(x, 4);
-			buf.writeInt32LE(y, 8);
-			
-			sendToEveryoneBut(buf, entity);	
-		}
-		
-		sendToEveryoneBut(buf, player) {
-			for (var m in this.players) {
-				if (this.players[m] == player) {
-					this.players[m].write(buf);
-				}
+				sockets[m].messages.on("keyPressed", function(data) {
+					var key = data.readInt8(0);
+
+					if (key == 119) {
+						game.sendToEveryone(player.puppet.move(0, labels.PLAYER_SPEED));
+					} else if (key == 115) {
+						game.sendToEveryone(player.puppet.move(0, -labels.PLAYER_SPEED));
+					} else if (key == 97) {
+						game.sendToEveryone(player.puppet.move(-labels.PLAYER_SPEED, 0));
+					} else if (key == 100) {
+						game.sendToEveryone(player.puppet.move(labels.PLAYER_SPEED, 0));
+					}
+
+				});
+
 			}
+
+			for (var m in this.players) {
+				this.players[m].setController(this.players[(m + 1) % this.players.length]);
+				this.players[m].setPuppet(this.players[(m - 1) % this.players.length]);
+			}
+			
+		}
+
+		addObject(obj) {
+			this.objects.push(obj);
+			this.sendToEveryone(obj.create());	
+		}
+		
+		removeObject(obj) {
+			this.objects.splice(this.objects.indexOf(obj), 1);
+			this.sendToEveryone(obj.remove());
 		}
 		
 		sendToEveryone(buf) {
 			for (var m in this.players) {
-				this.players[m].write(buf);
+				this.players[m].socket.write(buf);
 			}
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		
 	}
 	
