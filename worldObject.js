@@ -43,8 +43,7 @@ const labels = require("./labels");
 
             this.x = x;
             this.y = y;
-
-
+            
             var buf = messages.newMessage(labels.OBJECT_POSITION, 10);
 
             buf.writeUInt16LE(this.objectID, 2);

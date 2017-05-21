@@ -4,6 +4,7 @@ const EventEmitter = require("events");
 const Player = require("./player");
 const labels = require("./labels");
 const TileWorldObject = require("./tileWorldObject");
+const properties = require("./properties");
 
 messages.labelRegistry[1] = 'keyPressed';
 
@@ -33,13 +34,13 @@ messages.labelRegistry[1] = 'keyPressed';
 					var key = data.readInt8(0);
 
 					if (key == 119) {
-						player.puppet.move(0, labels.PLAYER_SPEED);
+						player.puppet.move(0, properties.PLAYER_SPEED);
 					} else if (key == 115) {
-						player.puppet.move(0, -labels.PLAYER_SPEED);
+						player.puppet.move(0, -properties.PLAYER_SPEED);
 					} else if (key == 97) {
-						player.puppet.move(-labels.PLAYER_SPEED, 0);
+						player.puppet.move(-properties.PLAYER_SPEED, 0);
 					} else if (key == 100) {
-						player.puppet.move(labels.PLAYER_SPEED, 0);
+						player.puppet.move(properties.PLAYER_SPEED, 0);
 					}
 
 				});
