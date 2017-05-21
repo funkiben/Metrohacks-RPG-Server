@@ -2,14 +2,14 @@
 (function(){
     
     const EventEmitter = require('events');
+    const properties= require('./properties');
     class Dungeon{
         
         //objects is just all the objects
         //switchvals is an array of arrays []
         //enemy is some stuff, probably [somestuff] with x and y pos vals
-        constructor(objects,switchVals,game,enemies,properties){
+        constructor(objects,switchVals,game,enemies){
             this.objects = objects;
-            this.properties=properties;
             this.switchVals = switchVals;
             this.game=game;
             this.enemy=enemy;
