@@ -13,8 +13,8 @@
             this.switchVals = switchVals;
             this.game=game;
             this.enemy=enemy;
-            this.events=new EventEmitter();
-            var events=this.events
+            
+            
             for(var player in game){
                 game[player].socket.messages.on("keyPress",function(data){
                     var key=data.readInt8(0)
@@ -27,7 +27,7 @@
                             var playery=game[player].y;
                             var distance=sqrt(pow((xval-playerx),2)-pow((yval-playery),2));
                             if(distance<properties.PLAYER_RANGE){
-                                events.emit('switchhit');
+                                game.events.emit('switchhit');
                                 
                             }
                         
@@ -46,6 +46,20 @@
                         
 
                         }
+                game.events.on("playerMove",function(){
+                    for(object in objects){
+                        var xval=objects[object].x;
+                        var yval=objects[object].y;
+                        var playerx=game[player].x;
+                        var playery=game[player].y;
+                        var distance=sqrt(pow((xval-playerx),2)-pow((yval-playery),2));
+                        if(distance<10){
+                            events.emit('tilehit')
+                        }
+                    }
+
+                });
+
                         
                     }
 
