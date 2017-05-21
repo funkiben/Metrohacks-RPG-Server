@@ -9,13 +9,19 @@ const InteractableWorldObject = require("./interactableWorldObject");
         constructor(game, objectID, type, x, y, maxHealth) {
             super(game, objectID, type, x, y, null);
             
-            this.setHealth(maxHealth);
-            this.setMaxHealth(maxHealth);
+            this.maxHealth = maxHealth;
 
             var w = this;
             this.action = function(dmg) {
                 w.setHealth(w.health - dmg);
             }
+        }
+
+        create() {
+            super.create();
+
+            this.setHealth(this.maxHealth);
+            this.setMaxHealth(this.maxHealth);
         }
 
         attack(dmg) {

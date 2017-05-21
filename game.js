@@ -25,7 +25,11 @@ messages.labelRegistry[1] = 'keyPressed';
 			var game = this;
 			
 			for (var m in sockets) {
-				const player = this.players[m] = new Player(this, this.nextObjectID(), sockets[m], 0, 0);
+				this.players[m] = new Player(this, this.nextObjectID(), sockets[m], 0, 0);
+			}
+
+			for (var m in this.players) {
+				const player = this.players[m];
 				this.addObject(player);
 				player.sendID();
 
@@ -62,7 +66,7 @@ messages.labelRegistry[1] = 'keyPressed';
 		addObject(obj) {
 			this.objects.push(obj);
 			obj.create();
-
+            
 			if (obj instanceof TileWorldObject) {
 				if (obj.isWall) {
 					this.walls.push(obj);

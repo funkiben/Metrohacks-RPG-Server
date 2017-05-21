@@ -12,8 +12,6 @@ const labels = require("./labels");
             this.x = x;
             this.y = y;
             this.z = 0;
-
-            this.setPosition(x, y);
         }
 
         create() {
@@ -24,6 +22,8 @@ const labels = require("./labels");
             buf.writeUInt8(this.z , 5);
 
             this.game.sendToEveryone(buf);
+
+            this.setPosition(this.x, this.y);
         }
 
         remove() {
